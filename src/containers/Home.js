@@ -3,7 +3,11 @@ import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { API } from "aws-amplify";
 import { Link } from "react-router-dom";
+import decor from '../images/BlueDecoration.png';
+import cityscape from '../images/CityScape.gif';
+import office from '../images/MainSetPiece.gif';
 import "./Home.css";
+import Iframe from 'react-iframe';
 
 export default class Home extends Component {
   constructor(props) {
@@ -35,43 +39,43 @@ export default class Home extends Component {
   }
 
   renderNotesList(notes) {
-    return [{}].concat(notes).map(
-      (note, i) =>
-        i !== 0
-          ? <LinkContainer
-              key={note.noteId}
-              to={`/notes/${note.noteId}`}
-            >
-              <ListGroupItem header={note.content.trim().split("\n")[0]}>
-                {"Created: " + new Date(note.createdAt).toLocaleString()}
-              </ListGroupItem>
-            </LinkContainer>
-          : <LinkContainer
-              key="new"
-              to="/notes/new"
-            >
-              <ListGroupItem>
-                <h4>
-                  <b>{"\uFF0B"}</b> Create a new note
-                </h4>
-              </ListGroupItem>
-            </LinkContainer>
-    );
+    return (
+      <div>
+        <img id="flipped_image" src={decor} alt="decoration"/>
+        <h1>WELCOME</h1>
+        <img src={cityscape} id="city_scape" alt="city-scape"/>
+        <img src={office} alt="office"/>
+        <Iframe url="http://www.youtube.com/embed/xDMP3i36naA"
+        width="450px"
+        height="450px"
+        id="myId"
+        className="myClassname"
+        display="initial"
+        position="relative"
+        allowFullScreen/>
+        <img id="flipped_image" src={decor} alt="decoration"/>
+      </div>
+    )
+
   }
 
   renderLander() {
     return (
       <div className="lander">
-        <h1>Scratch</h1>
-        <p>A simple note taking app</p>
+        <img id="flipped_image" src={decor} alt="decoration"/>
+        <h1>THE ONBOARDING TRAIL</h1>
+        <img src={office} alt="main-office"/>
+        <img src={decor} alt="decoration"/>
         <div>
-          <Link to="/login" className="btn btn-info btn-lg">
-            Login
-          </Link>
           <Link to="/signup" className="btn btn-success btn-lg">
-            Signup
+            Begin Journey
+          </Link>
+          <Link to="/login" className="btn btn-info btn-lg">
+            Continue Journey
           </Link>
         </div>
+        <br/>
+        <p>Made with <span role="img" aria-label="heart">❤️</span> using React and serverless AWS</p>
       </div>
     );
   }

@@ -4,8 +4,14 @@
   }
   
   .Home .lander h1 {
-    font-family: "Open Sans", sans-serif;
-    font-weight: 600;
+    font-family: "RODEO", sans-serif;
+    font-size: 100px;
+    color: white;
+  }
+
+  #flipped_image {
+    -webkit-transform: scaleY(-1);
+    transform: scaleY(-1);
   }
   
   .Home .lander p {
