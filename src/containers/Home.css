@@ -1,3 +1,7 @@
+.Home {
+  text-align: center;
+}
+
 .Home .lander {
     padding: 80px 0;
     text-align: center;
@@ -9,9 +13,13 @@
     color: white;
   }
 
-  #flipped_image {
+  .flipped_image {
     -webkit-transform: scaleY(-1);
     transform: scaleY(-1);
+  }
+
+  .textBlock {
+    text-align: center;
   }
   
   .Home .lander p {
