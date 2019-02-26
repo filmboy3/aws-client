@@ -4,6 +4,10 @@ import { Nav, Navbar, NavItem } from "react-bootstrap";
 import { Auth } from "aws-amplify";
 import { LinkContainer } from "react-router-bootstrap";
 import Routes from "./Routes";
+import ReactAudioPlayer from 'react-audio-player';
+import KeyboardEventHandler from 'react-keyboard-event-handler';
+import takeOnMe from './audio/takeOnMe.mp3'
+
 import "./App.css";
 
 class App extends Component {
@@ -12,7 +16,8 @@ class App extends Component {
 
     this.state = {
       isAuthenticated: false,
-      isAuthenticating: true
+      isAuthenticating: true,
+      soundOn: true,
     };
   }
 
@@ -41,6 +46,7 @@ class App extends Component {
   }
 
   render() {
+    let { soundOn } = this.state
     const childProps = {
       isAuthenticated: this.state.isAuthenticated,
       userHasAuthenticated: this.userHasAuthenticated
@@ -64,13 +70,19 @@ class App extends Component {
                     <NavItem>Begin</NavItem>
                   </LinkContainer>
                   <LinkContainer to="/login">
-                    <NavItem>Continue</NavItem>
+                    <NavItem>Login</NavItem>
                   </LinkContainer>
                 </Fragment>
             }
             </Nav>
           </Navbar.Collapse>
         </Navbar>
+        {soundOn && <ReactAudioPlayer
+        src={takeOnMe}
+        autoPlay
+        loop={true}
+        volume={.1}
+      /> }
         <div className="staticTop">
         <img className="flipped_image" src={require('./images/BlueDecoration.png')} alt="top_decoration"/>
           <div>
@@ -79,6 +91,17 @@ class App extends Component {
           <Routes childProps = {childProps}/>
           <img src={require('./images/BlueDecoration.png')} alt="bottom_decoration"/>
         </div>
+        <KeyboardEventHandler
+          handleKeys={['ctrl+x']}
+          onKeyEvent={(key, e) => {
+              console.log('Mute triggered')
+              soundOn = !soundOn;
+              this.setState({
+                soundOn
+              })
+            }
+          }   
+        />
       </div>
     );
   }

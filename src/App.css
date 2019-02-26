@@ -23,6 +23,10 @@ div {
   text-align: center;
 }
 
+.pixel_button {
+  font-family: "PRESS_START", sans-serif !important;
+}
+
 
 .flipped_image {
   -webkit-transform: scaleY(-1);

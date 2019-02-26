@@ -1,49 +1,67 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-const styles = theme => ({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-      },
-      textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-      }
-    })
+import { FormGroup, FormControl, ControlLabel, Button } from "react-bootstrap";
+import { API } from "aws-amplify";
 
-class Coffee extends Component {
-    handleChange = name => event => {
+export default class Coffee extends Component {
+
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+            isLoading: false,
+            restaurant: "",
+            order: ""
+        };
+      }
+
+      handleChange = event => {
         this.setState({
-          [name]: event.target.value
+          [event.target.id]: event.target.value
         });
-      };
+      }
+      handleSubmit = async event => {
+        event.preventDefault();
+        const { restaurant, order } = this.state;
+        const { userName } = this.props;
+        let content = `${userName} wants ${order} from ${restaurant}`;
+        console.log(content);
+        try {
+          await this.createNote({
+            content
+          });
+        } catch (e) {
+          alert(e);
+        }
+      }
+      createNote(note) {
+        return API.post("notes", "/notes", {
+          body: note
+        });
+      
+      }
    render() {
        return (
-        <form noValidate autoComplete="off">
-            <TextField
-                id="restaurant"
-                label="Favorite Spot"
-                onChange={this.handleChange('restaurant')}
-                marin="normal"
-                placeholder="La Colombe on Lafayette near E 4th"
-                variant="filled"
-            />
-            <TextField
-                id="order"
-                label="Go-To Order"
-                onChange={this.handleChange('restaurant')}
-                marin="normal"
-                placeholder="Pure Black"
-                variant="filled"
-            />
-            <Button variant="primary" type="submit">
-                Submit
-            </Button>
+        <form onSubmit={this.handleSubmit}>
+        <FormGroup>
+          <ControlLabel>Favorite Spot</ControlLabel>
+          <FormControl
+            id="restaurant"
+            onChange={this.handleChange}
+            value={this.state.restaurant}
+            componentClass="textarea"
+          />
+          <ControlLabel>Go-To Order</ControlLabel>
+          <FormControl
+            id="order"
+            onChange={this.handleChange}
+            value={this.state.order}
+            componentClass="textarea"
+          />
+        </FormGroup>
+        <Button variant="primary" type="submit">
+           Submit
+        </Button>
         </form>
        )
     }
 }
-
-export default withStyles(styles)(Coffee);

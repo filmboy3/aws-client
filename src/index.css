@@ -6,6 +6,10 @@
   font-family: 'PressStart';
   src: local('PressStart'), url(./fonts/PressStart.ttf) format('truetype');
 }
+@font-face {
+  font-family: 'News';
+  src: local('News'), url(./fonts/OldeEnglish.ttf) format('truetype');
+}
 
 body {
   margin: 0;
@@ -18,11 +22,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+button, input {
+  font-family: "PressStart" !important;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
+.News {
+  font-family: "News", sans-serif;
+  font-size: 300%;
+}
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "RODEO", serif;

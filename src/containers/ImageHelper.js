@@ -4,6 +4,8 @@ import NYC_Zoom from '../images/NYC_ZoomWide_Map.png';
 import scottStatic from '../images/ScottGalloway.png';
 import headphone from '../images/headphone.png';
 import coffeeMan from '../images/coffee-man.gif';
+import window from '../images/WaitingByWindow.png';
+import Ping_Pong from '../images/ping_pong.gif';
 
 export default {
     cityscape,
@@ -11,5 +13,7 @@ export default {
     scottStatic,
     NYC_Zoom,
     headphone,
-    coffeeMan
+    coffeeMan,
+    window,
+    Ping_Pong
   }

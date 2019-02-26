@@ -1,13 +1,13 @@
 export const text = [
   // 0
   ["It's a journey that will take you across thousands of miles ... of code.  The learning curve is steep, the codebase is wide, and there are countless thorny problems and treacherous bugs littering your path.", 
-  "Will you and your team help navigate Jonathan's safe passage to the L2 frontier, first forged by this brave pioneer?", 
-  `{scottStatic}`,
-  "Press SPACEBAR to continue"], 
+  "Will you and your team help navigate Jonathan's safe passage to the L2 frontier, originally forged by this brave pioneer?", 
+  "CONTINUE_BUTTON",
+  `{scottStatic}`], 
   // 1
   ["To toggle music/SFX, press Ctrl-x",
-  `{headphone}`,
-  "Press SPACEBAR to continue"], 
+  "CONTINUE_BUTTON",
+  `{headphone}`], 
   // 2
   ['There are many incredibly talented engineers on the L2 team.',
     'You may support Jonathan as:', 
@@ -19,16 +19,22 @@ export const text = [
     '6. Choose your own name',
     'Please enter the number of your choice: _'],
   // 3
-  ["Hi, NAMEPLACEHOLDER! Jonathan's almost ready for his first day. Shall we get started?",
-   "Press SPACEBAR to continue"],
+  [`Hi, NAMEPLACEHOLDER! Jonathan's almost ready for his first day. Shall we get started?`,
+   `CONTINUE_BUTTON`,
+  `{window}`],
   // 4
    ["Jonathan has tons of questions about L2's work environment, the role, the team ... but before the journey officially begins: ",
    "Can he take you out for coffee (or lunch)?",
-   `{coffeeMan}`,
-   `Press 'y' or 'n'`],
+   `CONTINUE_BUTTON`,
+   `{coffeeMan}`],
    // 5
-   ["Please list your favorite eateries in NYC",
-    "Also your preferred orders",
+   ["(Feel free to submit more than one)",
+    `CONTINUE_BUTTON`,
     `{NYC_Zoom}`,
+  ],
+  // 6
+  ["What are some of your most frequently used NPM packages?",
+  `CONTINUE_BUTTON`,
+    `{Ping_Pong}`
   ]
 ];

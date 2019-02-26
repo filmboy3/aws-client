@@ -1,12 +1,10 @@
-import ReactAudioPlayer from 'react-audio-player';
-import takeOnMe from '../audio/takeOnMe.mp3'
-import { FormGroup, FormControl, ControlLabel, Button } from "react-bootstrap";
 import React, { Component } from "react";
 import { ListGroup, Modal } from "react-bootstrap";
 import { Progress } from 'react-sweet-progress';
 import { API } from "aws-amplify";
 import { Link } from "react-router-dom";
 import KeyboardEventHandler from 'react-keyboard-event-handler';
+import { Button } from 'semantic-ui-react';
 import { text } from "../text/text.js";
 import imagesCache from './ImageHelper.js'
 import shortid from 'shortid';
@@ -22,7 +20,6 @@ export default class Home extends Component {
     this.state = {
       isLoading: true,
       notes: [],
-      soundOn: true,
       modalVisible: false,
       textCounter: 0,
       players: ['Raj', 'Kliment', 'Runtao', 'Bruce', 'Sabbir'],
@@ -61,22 +58,25 @@ export default class Home extends Component {
   }
   nextSlide = () => {
     const {text, textCounter, modalVisible, eventCounter} = this.state;
-    if (text[textCounter+1]) {
-      
-      if (textCounter > 2) {
-        this.setState({
-          modalVisible: !modalVisible,
-          eventCounter: eventCounter + 1
-        }) 
-        
-      }
+
       let progress = (((textCounter+2) / text.length) * 100).toFixed(2);
-      console.log(progress);
+      console.log(`Progress: ${progress}, textCounter: ${textCounter}`);
       this.setState({
         textCounter: textCounter + 1,
         progress
       })
-    }
+
+      
+      if (textCounter > 2) {
+        setTimeout(() => {
+          this.setState({
+            modalVisible: !modalVisible,
+            eventCounter: eventCounter + 1
+          }) 
+        }, 3000)
+        
+      }
+    
   }
 
 
@@ -101,6 +101,7 @@ export default class Home extends Component {
   }
 
   coffee = (key) => {
+    console.log("Inside Coffee func with key: ", key)
     if (key === 'n'){
       alert(`Jonathan respects your decision and will not ask you out for coffee in real life, ${this.state.playerName}. But for the purpose of the app, would you mind playing along ...?`)
     }
@@ -108,18 +109,25 @@ export default class Home extends Component {
   }
 
   parser = (name, string) => {
-    return string.replace("NAMEPLACEHOLDER", `${name}`)
+    return string.replace(/NAMEPLACEHOLDER/g, `${name}`)
   }
 
   renderNotesList(notes, props) {
 
-    let { soundOn, modalVisible, progress, playerName, textCounter, text, eventCounter } = this.state;
+    let { modalVisible, progress, playerName, textCounter, text, eventCounter } = this.state;
     let modalClose = () => this.setState({ modalVisible: false });
     let parsedEvent = this.parser(this.nameRandomizer(), modal_data[eventCounter][1])
 
     let lineRender = [];
     text[textCounter].forEach((line) => {
       let imageCheck = false;
+      let buttonCheck = false;
+      if (line.includes('CONTINUE_BUTTON')) {
+        lineRender.push(
+          <p><Button inverted color='green' onClick={this.nextSlide}>Onward</Button></p>
+        )
+        buttonCheck = true;
+      }
       Object.keys(imagesCache).forEach(key => {
         if (line.includes(key)){
           imageCheck = true;
@@ -128,7 +136,7 @@ export default class Home extends Component {
           )
         }
       })
-        if (!imageCheck) {
+        if (!imageCheck && !buttonCheck) {
           lineRender.push(
             <p key={shortid.generate()}>{line.replace("NAMEPLACEHOLDER", `${playerName}`)}</p>
           );
@@ -137,12 +145,8 @@ export default class Home extends Component {
 
     return (
       <div key={shortid.generate()}>
+    
 
-        {soundOn && <ReactAudioPlayer
-          src={takeOnMe}
-          autoPlay
-          volume={.1}
-        /> }
         <Progress percent={progress}/>
           <Modal
             key="modal" 
@@ -150,8 +154,10 @@ export default class Home extends Component {
             show={modalVisible}
             onHide={modalClose}
           >
-          <Modal.Header closeButton />
-            <Modal.Body>
+            <Modal.Header closeButton>
+                <Modal.Title className="News">The Gartner Times</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
               <div>
                 <img className="imageInsert" key={shortid.generate()} src={`${modal_data[eventCounter][0]}`} alt={`${modal_data[eventCounter][2]}`}/>
                 <p>{parsedEvent}</p>
@@ -159,30 +165,11 @@ export default class Home extends Component {
             </Modal.Body>
         </Modal>
 
-        
+        {textCounter === 5 && <Coffee userName={playerName} />}
 
         <div className="textBlock" key={shortid.generate()}>
             {lineRender}
         </div>
-        {textCounter === 5 && 
-        <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="content">
-            <ControlLabel>Coffee Shop</ControlLabel>
-            <FormControl
-              onChange={this.handleChange}
-              value={this.state.restaurant}
-              componentClass="textarea"
-            />
-            <FormControl
-              onChange={this.handleChange}
-              value={this.state.order}
-              componentClass="textarea"
-            />
-          </FormGroup>
-          <Button variant="primary" type="submit">
-             Submit
-          </Button>
-          </form>}
         <KeyboardEventHandler
           handleKeys={['numeric']}
           onKeyEvent={(key, e) => {
@@ -216,17 +203,7 @@ export default class Home extends Component {
             }
           }   
         />
-        <KeyboardEventHandler
-          handleKeys={['ctrl+x']}
-          onKeyEvent={(key, e) => {
-              console.log('Mute triggered')
-              soundOn = !soundOn;
-              this.setState({
-                soundOn
-              })
-            }
-          }   
-        />
+      
       </div>
     )
 
@@ -236,15 +213,14 @@ export default class Home extends Component {
     return (
       <div className="lander" key={shortid.generate()}>
         <div>
-          <Link to="/signup" className="btn btn-success btn-lg">
-            Begin Journey
-          </Link>
-          <Link to="/login" className="btn btn-info btn-lg">
-            Continue Journey
-          </Link>
+
+        <p key={shortid.generate()}>Welcome to Jonathan's <span id="western">Onboarding Trail</span>, an interactive survey</p>
+          <Link to="/signup"><Button inverted color='green'>New Journey</Button></Link>
+          <Link to="/login"><Button inverted color='green'>Login</Button></Link>
+        <p> Made with <span role="img" aria-label="heart">❤️</span> with React and serverless AWS</p>
+        <img className="imageInsert" key={shortid.generate()} src={`${imagesCache.main_office}`} alt={'main_office'}/>
         </div>
         <br/>
-        <p key={shortid.generate()}>Made with <span role="img" aria-label="heart">❤️</span> with React and serverless AWS</p>
       </div>
     );
   }
