@@ -6,6 +6,34 @@
     padding: 80px 0;
     text-align: center;
   }
+
+  .progress-bar {
+    position: relative;
+    height: 20px;
+    width: 350px;
+    border-radius: 50px;
+    border: 1px solid #333;
+  }
+
+  .shade {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .modal_container {
+    text-align: center;
+  }
+  
+  .filler {
+    background: green;
+    height: 100%;
+    border-radius: inherit;
+    transition: width .2s ease-in;
+  }
   
   .Home .lander h1 {
     font-family: "RODEO", sans-serif;
@@ -13,14 +41,19 @@
     color: white;
   }
 
+  .imageInsert {
+    max-width: 85%;
+    max-height: 85%;
+  }
+
   .flipped_image {
     -webkit-transform: scaleY(-1);
     transform: scaleY(-1);
   }
 
-  .textBlock {
+  /* .textBlock {
     text-align: center;
-  }
+  } */
   
   .Home .lander p {
     color: #999;

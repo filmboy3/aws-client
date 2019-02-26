@@ -2,6 +2,39 @@
   margin-top: 15px;
 }
 
+.navbar {
+  font-weight: bold;
+  font-family: "RODEO", sans-serif;
+  font-size: 300%;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
 .App .navbar-brand {
   font-weight: bold;
+  font-family: "RODEO", sans-serif;
+  font-size: 100%;
+}
+
+div {
+  text-align: center;
+}
+
+
+.flipped_image {
+  -webkit-transform: scaleY(-1);
+  transform: scaleY(-1);
+}
+
+#dino {
+  margin-bottom: 2%;
+  margin-top: -2%;
+}
+
+img {
+  margin-top: 2%;
+  margin-bottom: 2%;
 }

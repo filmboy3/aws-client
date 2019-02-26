@@ -71,7 +71,14 @@ class App extends Component {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-        <Routes childProps = {childProps}/>
+        <div className="staticTop">
+        <img className="flipped_image" src={require('./images/BlueDecoration.png')} alt="top_decoration"/>
+          <div>
+          <img id="dino" src={require('./images/Main_Logo.png')} height="15%" width="15%" alt="logo" />
+          </div>
+          <Routes childProps = {childProps}/>
+          <img src={require('./images/BlueDecoration.png')} alt="bottom_decoration"/>
+        </div>
       </div>
     );
   }

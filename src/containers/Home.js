@@ -1,18 +1,19 @@
-import takeOnMe from '../audio/takeOnMe.mp3'
-import React, { Component } from "react";
-import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
-import { API } from "aws-amplify";
-import shortid from 'shortid';
-import { Link } from "react-router-dom";
-import decor from '../images/BlueDecoration.png';
-import KeyboardEventHandler from 'react-keyboard-event-handler';
-import cityscape from '../images/CityScape.gif';
 import ReactAudioPlayer from 'react-audio-player';
-import office from '../images/MainSetPiece.gif';
-import scottStatic from '../images/ScottGalloway.png';
-import "./Home.css";
+import takeOnMe from '../audio/takeOnMe.mp3'
+import { FormGroup, FormControl, ControlLabel, Button } from "react-bootstrap";
+import React, { Component } from "react";
+import { ListGroup, Modal } from "react-bootstrap";
+import { Progress } from 'react-sweet-progress';
+import { API } from "aws-amplify";
+import { Link } from "react-router-dom";
+import KeyboardEventHandler from 'react-keyboard-event-handler';
 import { text } from "../text/text.js";
+import imagesCache from './ImageHelper.js'
+import shortid from 'shortid';
+import { modal_data } from './Modal.js';
+import "react-sweet-progress/lib/style.css";
+import "./Home.css";
+import Coffee from "../components/coffee.js";
 
 export default class Home extends Component {
   constructor(props) {
@@ -22,13 +23,18 @@ export default class Home extends Component {
       isLoading: true,
       notes: [],
       soundOn: true,
+      modalVisible: false,
       textCounter: 0,
       players: ['Raj', 'Kliment', 'Runtao', 'Bruce', 'Sabbir'],
-      playerName: 'Bob',
+      otherPlayers: [],
+      playerName: 'Scott',
+      eventCounter: 0,
       text: text,
+      progress: 0,
       masterData: [],
     };
   }
+
 
   async componentDidMount() {
     if (!this.props.isAuthenticated) {
@@ -48,17 +54,49 @@ export default class Home extends Component {
   notes() {
     return API.get("notes", "/notes");
   }
+  
+  nameRandomizer = () => {
+    const { players } = this.state;
+    return players[Math.floor(Math.random()*players.length)];
+  }
+  nextSlide = () => {
+    const {text, textCounter, modalVisible, eventCounter} = this.state;
+    if (text[textCounter+1]) {
+      
+      if (textCounter > 2) {
+        this.setState({
+          modalVisible: !modalVisible,
+          eventCounter: eventCounter + 1
+        }) 
+        
+      }
+      let progress = (((textCounter+2) / text.length) * 100).toFixed(2);
+      console.log(progress);
+      this.setState({
+        textCounter: textCounter + 1,
+        progress
+      })
+    }
+  }
+
 
   newName = (key) => {
-    if (this.state.players[key-1]) {
+    const { players } = this.state;
+    if (key === '6') {
+      let playerName = window.prompt("Sure! Please enter your name:", "Scott Galloway");
       this.setState({
-        playerName: this.state.players[key-1] 
+        playerName,
+        otherPlayers: players
+      });
+      this.nextSlide();
+    }
+    if (players[key-1]) {
+      let otherPlayers = players.filter(player => player !== players[key-1]);
+      this.setState({
+        playerName: players[key-1],
+        otherPlayers 
       })
-      if (this.state.text[this.state.textCounter+1]) {
-        this.setState({
-          textCounter: this.state.textCounter + 1
-        })
-      }
+      this.nextSlide();
     }
   }
 
@@ -66,46 +104,89 @@ export default class Home extends Component {
     if (key === 'n'){
       alert(`Jonathan respects your decision and will not ask you out for coffee in real life, ${this.state.playerName}. But for the purpose of the app, would you mind playing along ...?`)
     }
-    
-    if (this.state.text[this.state.textCounter+1]) {
-      this.setState({
-        textCounter: this.state.textCounter + 1
-      })
-    }
+    this.nextSlide();
+  }
+
+  parser = (name, string) => {
+    return string.replace("NAMEPLACEHOLDER", `${name}`)
   }
 
   renderNotesList(notes, props) {
-    let sound = this.state.soundOn;
+
+    let { soundOn, modalVisible, progress, playerName, textCounter, text, eventCounter } = this.state;
+    let modalClose = () => this.setState({ modalVisible: false });
+    let parsedEvent = this.parser(this.nameRandomizer(), modal_data[eventCounter][1])
+
     let lineRender = [];
-    text[this.state.textCounter].forEach(line => {
-        if (line.includes("{scottStatic}")){
-          // let item = line.slice(1, -1);
+    text[textCounter].forEach((line) => {
+      let imageCheck = false;
+      Object.keys(imagesCache).forEach(key => {
+        if (line.includes(key)){
+          imageCheck = true;
           lineRender.push(
-            <img src={scottStatic} alt="scottStatic" height="50%" width="50%" />
+            <img className="imageInsert" key={shortid.generate()} src={`${imagesCache[key]}`} alt={key}/>
           )
-        } else {
+        }
+      })
+        if (!imageCheck) {
           lineRender.push(
-            <p key={shortid.generate()}>{line.replace("NAMEPLACEHOLDER", `${this.state.playerName}`)}</p>
+            <p key={shortid.generate()}>{line.replace("NAMEPLACEHOLDER", `${playerName}`)}</p>
           );
         }
       })
-     
+
     return (
-      <div>
-        <img className="flipped_image" src={decor} alt="decoration"/>
-        <h1>THE ONBOARDING TRAIL</h1>
-        {sound && <ReactAudioPlayer
+      <div key={shortid.generate()}>
+
+        {soundOn && <ReactAudioPlayer
           src={takeOnMe}
           autoPlay
           volume={.1}
         /> }
+        <Progress percent={progress}/>
+          <Modal
+            key="modal" 
+            className="modal_trail"
+            show={modalVisible}
+            onHide={modalClose}
+          >
+          <Modal.Header closeButton />
+            <Modal.Body>
+              <div>
+                <img className="imageInsert" key={shortid.generate()} src={`${modal_data[eventCounter][0]}`} alt={`${modal_data[eventCounter][2]}`}/>
+                <p>{parsedEvent}</p>
+              </div>
+            </Modal.Body>
+        </Modal>
 
-        <div class="textBlock">{lineRender}</div>
+        
+
+        <div className="textBlock" key={shortid.generate()}>
+            {lineRender}
+        </div>
+        {textCounter === 5 && 
+        <form onSubmit={this.handleSubmit}>
+          <FormGroup controlId="content">
+            <ControlLabel>Coffee Shop</ControlLabel>
+            <FormControl
+              onChange={this.handleChange}
+              value={this.state.restaurant}
+              componentClass="textarea"
+            />
+            <FormControl
+              onChange={this.handleChange}
+              value={this.state.order}
+              componentClass="textarea"
+            />
+          </FormGroup>
+          <Button variant="primary" type="submit">
+             Submit
+          </Button>
+          </form>}
         <KeyboardEventHandler
           handleKeys={['numeric']}
           onKeyEvent={(key, e) => {
-              // console.log('Numeric triggered');
-              switch (this.state.textCounter) {
+              switch (textCounter) {
                 case 2:
                   this.newName(key);
                   break;
@@ -118,8 +199,7 @@ export default class Home extends Component {
         <KeyboardEventHandler
           handleKeys={['y', 'n']}
           onKeyEvent={(key, e) => {
-              console.log('Yes or No triggered')
-              switch (this.state.textCounter) {
+              switch (textCounter) {
                 case 4:
                   this.coffee(key);
                   break;
@@ -132,27 +212,21 @@ export default class Home extends Component {
         <KeyboardEventHandler
           handleKeys={['space']}
           onKeyEvent={(key, e) => {
-              console.log('Spacebar triggered')
-              if (this.state.text[this.state.textCounter+1]) {
-                this.setState({
-                  textCounter: this.state.textCounter + 1
-                })
-              }
+              this.nextSlide();
             }
           }   
         />
         <KeyboardEventHandler
-          handleKeys={['ctrl+s']}
+          handleKeys={['ctrl+x']}
           onKeyEvent={(key, e) => {
               console.log('Mute triggered')
-              let soundOn = !this.state.soundOn;
+              soundOn = !soundOn;
               this.setState({
                 soundOn
               })
             }
           }   
         />
-        <img src={decor} alt="decoration"/>
       </div>
     )
 
@@ -160,10 +234,7 @@ export default class Home extends Component {
 
   renderLander(props) {
     return (
-      <div className="lander">
-        <img className="flipped_image" src={decor} alt="decoration"/>
-        <h1>THE L2 ONBOARDING TRAIL</h1>
-        <img src={decor} alt="decoration"/>
+      <div className="lander" key={shortid.generate()}>
         <div>
           <Link to="/signup" className="btn btn-success btn-lg">
             Begin Journey
@@ -173,15 +244,38 @@ export default class Home extends Component {
           </Link>
         </div>
         <br/>
-        <p>Made with <span role="img" aria-label="heart">❤️</span> using React and serverless AWS</p>
+        <p key={shortid.generate()}>Made with <span role="img" aria-label="heart">❤️</span> with React and serverless AWS</p>
       </div>
     );
+  }
+
+  handleChange = event => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
+
+  createNote(note) {
+    return API.post("notes", "/notes", {
+      body: note
+    });
+  
+  }
+
+  handleSubmit = async event => {
+    event.preventDefault();
+    try {
+      await this.createNote({
+        content: this.state.content
+      });
+    } catch (e) {
+      alert(e);
+    }
   }
 
   renderNotes() {
     return (
       <div className="notes">
-        {/* <PageHeader>Your Notes</PageHeader> */}
         <ListGroup>
           {!this.state.isLoading && this.renderNotesList(this.state.notes)}
         </ListGroup>
@@ -191,7 +285,7 @@ export default class Home extends Component {
 
   render() {
     return (
-      <div className="Home">
+      <div className="Home" key={shortid.generate()}>
         {this.props.isAuthenticated ? this.renderNotes() : this.renderLander()}
       </div>
     );
