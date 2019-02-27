@@ -11,6 +11,8 @@ import mother_board from '../images/motherboard.png';
 import monitor_desk from '../images/otherDesk.png';
 import DeskHeadphone from '../images/DeskHeadphone.gif';
 import gym_shot from '../images/gym.png';
+import trophy_shot from '../images/trophy.gif';
+import Programming_Skill from '../images/programmingSkill.gif';
 
 export default {
     cityscape,
@@ -25,5 +27,7 @@ export default {
     monitor_desk,
     mother_board,
     DeskHeadphone,
-    gym_shot
+    gym_shot,
+    trophy_shot,
+    Programming_Skill
   }

@@ -14,8 +14,10 @@ import "react-sweet-progress/lib/style.css";
 import decor from '../images/BlueDecoration.png';
 import NPM from '../components/npmQuestion.js';
 import Coffee from "../components/coffee.js";
+import SingleQuestion from "../components/singleQuestion.js";
 import Strengths from "../components/strengthsQuestion.js";
 import TechStack from "../components/techStack.js";
+import TopQuality from "../components/TopQuality.js";
 import "./Home.css";
 
 export default class Home extends Component {
@@ -64,8 +66,8 @@ export default class Home extends Component {
   }
   
   nameRandomizer = () => {
-    const { players } = this.state;
-    return players[Math.floor(Math.random()*players.length)];
+    const { otherPlayers } = this.state;
+    return otherPlayers[Math.floor(Math.random()*otherPlayers.length)];
   }
   nextSlide = () => {
     const {text, textCounter, modalVisible, eventCounter} = this.state;
@@ -185,7 +187,10 @@ export default class Home extends Component {
         {textCounter === 6 && <NPM userName={playerName} />}
         {textCounter === 7 && <TechStack userName={playerName} title={"Current Stack"} placeholder={"Current Stack: Languages, Frameworks, Databases"}/>}
         {textCounter === 8 && <TechStack userName={playerName} title={"Wishlist Stack"} placeholder={"WishList: Languages, Frameworks, Databases"}/>}
-        {textCounter === 9 && <Strengths userName={playerName} title={"Wishlist Stack"} placeholder={"WishList: Languages, Frameworks, Databases"}/>}
+        {textCounter === 9 && <Strengths userName={playerName} title={"Strengths/Weaknesses"}/>}
+        {textCounter === 10 && <SingleQuestion userName={playerName} title={"Expectations of Jonathan"} placeholder={"...Besides slaying at company Karaoke nights"}/>}
+        {textCounter === 11 && <SingleQuestion userName={playerName} title={"Hobbies"} placeholder={"Underwater Basket Weaving"}/>}
+        {textCounter === 12 && <TopQuality userName={playerName} title={"Hobbies"} placeholder={"Underwater Basket Weaving"}/>}
 
         <div className="textBlock" key={shortid.generate()}>
             {lineRender}

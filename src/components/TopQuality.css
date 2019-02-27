@@ -1,0 +1,7 @@
+.ui.checkbox label {
+    color: white !important;
+}
+
+.ui.checkbox label:hover {
+    color: grey !important;
+}

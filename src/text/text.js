@@ -25,7 +25,7 @@ export const text = [
    `CONTINUE_BUTTON`,
   `{window}`],
   // 4
-   ["Jonathan has many questions about L2's work environment, the role, the team ... but before the journey officially begins: ",
+   ["Jonathan has many questions about your work environment, the role, the team ... but before the journey officially begins: ",
    "He'd love to take you out for coffee or lunch.",
    `CONTINUE_BUTTON`,
    `{coffeeMan}`],
@@ -35,22 +35,39 @@ export const text = [
     `{NYC_Zoom}`,
   ],
   // 6
-  ["On a typical project, what are some go-to NPM packages you think Jonathan should know?",
+  ["On a typical project, NAMEPLACEHOLDER, what are some go-to NPM packages you think Jonathan should know?",
   `CONTINUE_BUTTON`,
     `{mother_board}`
   ],
   // 7
-  [`What are the essential components in L2's current tech stack?`,
+  [`NAMEPLACEHOLDER, what are the essential components in L2's current tech stack?`,
   `CONTINUE_BUTTON`,
   `{monitor_desk}`],
   // 8
-  [`Are there any wishlist frameworks/libraries/paradigms the team is interested in trying out in 2019?`,
+  [`NAMEPLACEHOLDER, are there any wishlist frameworks/libraries the team is interested in trying out in 2019?`,
   `CONTINUE_BUTTON`,
-  `{monitor_desk}`],
-  //
-  [`Every Software Engineer has their strengths and areas they'd like to improve.`,
-  `Jonathan recognizes that he's strong in his technical communication and liasing between different departments, and wants to improve his raw coding speed.`,
-  `NAMESPACE, what are some of your strengths and areas you'd like to improve upon going forward?`,
+  `{DeskHeadphone}`],
+  // 9
+  [`Every Software Engineer has strengths and areas they'd like to improve.`,
+  `Jonathan recognizes that he's strong in his technical communication and liasing between departments, and needs to improve his coding speed.`,
+  `NAMEPLACEHOLDER, what are some of your strengths and areas you'd personally like to improve upon going forward?`,
   `CONTINUE_BUTTON`,
   `{gym_shot}`],
+  // 10
+  [`What are your core expectations of Jonathan?`,
+  `In what respects do you most see him most benefitting the team?`,
+  `CONTINUE_BUTTON`,
+  `{trophy_shot}`],
+   // 11
+   [`Outside of programming, NAMEPLACEHOLDER, how would you fill a perfect weekend?`,
+   `What are some of your favorite hobbies?`,
+   `Jonathan is obsessed with board games (he owns over 150),`,
+   `loves seeking out vegan eateries, binge-watching Japanese television and Ping Pong`,
+   `CONTINUE_BUTTON`,
+   `{Ping_Pong}`],
+   // 12
+   [`While each are important, which of the following engineering abilities do you most highly value?`,
+    `CONTINUE_BUTTON`,
+    `{Programming_Skill}`
+    ],
 ];

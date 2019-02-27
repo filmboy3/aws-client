@@ -4,13 +4,13 @@ import { API } from "aws-amplify";
 import { SemanticToastContainer, toast } from 'react-semantic-toasts';
 import 'react-semantic-toasts/styles/react-semantic-alert.css';
 
-export default class Coffee extends Component {
+export default class SingleQuestion extends Component {
 
     constructor(props) {
         super(props);
     
         this.state = {
-            strength: "",
+            data: "",
         };
       }
 
@@ -21,9 +21,9 @@ export default class Coffee extends Component {
       }
       handleSubmit = async event => {
         event.preventDefault();
-        const { strength } = this.state;
-        const { userName } = this.props;
-        let content = `${userName} hopes Jonathan can contribute '${strength}' to the team'`;
+        const { data } = this.state;
+        const { userName, title } = this.props;
+        let content = `${title}: ${userName}, '${data}'`;
         console.log(content);
         try {
           await this.createNote({
@@ -37,7 +37,7 @@ export default class Coffee extends Component {
             },
         );
           this.setState({
-            strength: '',
+            data: '',
             })
         } catch (e) {
           alert(e);
@@ -54,12 +54,12 @@ export default class Coffee extends Component {
         <SemanticToastContainer />
         <Form onSubmit={this.handleSubmit}>
           <Form.Field>
-            <label style={{color: 'grey'}}>Strong Suit</label>
+            <label style={{color: 'grey'}}>{this.props.title}</label>
             <input
-                id="strength"
-                placeholder='Really Nice Dresser'
+                id={this.props.id}
+                placeholder={this.props.placeholder}
                 onChange={this.handleChange}
-                value={this.state.strength}
+                value={this.state.data}
                 componentClass="textarea"
              />
           </Form.Field>
