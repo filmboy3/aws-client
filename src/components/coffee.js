@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { FormGroup, FormControl, ControlLabel, Button } from "react-bootstrap";
+import { Button, Form } from 'semantic-ui-react';
 import { API } from "aws-amplify";
+import { SemanticToastContainer, toast } from 'react-semantic-toasts';
+import 'react-semantic-toasts/styles/react-semantic-alert.css';
 
 export default class Coffee extends Component {
 
@@ -8,7 +10,6 @@ export default class Coffee extends Component {
         super(props);
     
         this.state = {
-            isLoading: false,
             restaurant: "",
             order: ""
         };
@@ -29,6 +30,17 @@ export default class Coffee extends Component {
           await this.createNote({
             content
           });
+          toast(
+            {
+                type: 'success',
+                icon: 'save',
+                description: <p>Saved ... feel free to submit more!</p>
+            },
+        );
+          this.setState({
+            restaurant: '',
+            order: ''
+            })
         } catch (e) {
           alert(e);
         }
@@ -37,31 +49,35 @@ export default class Coffee extends Component {
         return API.post("notes", "/notes", {
           body: note
         });
-      
       }
    render() {
        return (
-        <form onSubmit={this.handleSubmit}>
-        <FormGroup>
-          <ControlLabel>Favorite Spot</ControlLabel>
-          <FormControl
-            id="restaurant"
-            onChange={this.handleChange}
-            value={this.state.restaurant}
-            componentClass="textarea"
-          />
-          <ControlLabel>Go-To Order</ControlLabel>
-          <FormControl
-            id="order"
-            onChange={this.handleChange}
-            value={this.state.order}
-            componentClass="textarea"
-          />
-        </FormGroup>
-        <Button variant="primary" type="submit">
-           Submit
-        </Button>
-        </form>
+           <div>
+        <SemanticToastContainer />
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Field>
+            <label style={{color: 'grey'}}>Favorite Coffee Spot</label>
+            <input
+                id="restaurant"
+                placeholder='La Colombe on Lafayette'
+                onChange={this.handleChange}
+                value={this.state.restaurant}
+                componentClass="textarea"
+             />
+          </Form.Field>
+          <Form.Field>
+            <label style={{color: 'grey'}}>Favorite Order</label>
+            <input
+                placeholder='Espresso'
+                id="order"
+                onChange={this.handleChange}
+                value={this.state.order}
+                componentClass="textarea"
+             />
+          </Form.Field>
+            <Button type="submit">Submit</Button>
+        </Form>
+        </div>
        )
     }
 }

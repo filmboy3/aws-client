@@ -54,13 +54,7 @@ class App extends Component {
     return (
       !this.state.isAuthenticating &&
       <div className="App container">
-        <Navbar fluid collapseOnSelect>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <Link to="/">The Onboarding Trail</Link>
-            </Navbar.Brand>
-            <Navbar.Toggle />
-          </Navbar.Header>
+        <Navbar collapseOnSelect style={{backgroundColor: 'black', borderColor: 'black'}}>
           <Navbar.Collapse>
             <Nav pullRight>
             {this.state.isAuthenticated
@@ -77,19 +71,19 @@ class App extends Component {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
+      <div className="staticTop">
+      <img className="flipped_image" src={require('./images/BlueDecoration.png')} alt="top_decoration"/>
+      <div>
+      </div>
+      <img id="dino" src={require('./images/Main_Logo.png')} height="15%" width="15%" alt="logo" />
         {soundOn && <ReactAudioPlayer
         src={takeOnMe}
         autoPlay
         loop={true}
         volume={.1}
       /> }
-        <div className="staticTop">
-        <img className="flipped_image" src={require('./images/BlueDecoration.png')} alt="top_decoration"/>
-          <div>
-          <img id="dino" src={require('./images/Main_Logo.png')} height="15%" width="15%" alt="logo" />
-          </div>
+         
           <Routes childProps = {childProps}/>
-          <img src={require('./images/BlueDecoration.png')} alt="bottom_decoration"/>
         </div>
         <KeyboardEventHandler
           handleKeys={['ctrl+x']}

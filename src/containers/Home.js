@@ -8,15 +8,20 @@ import { Button } from 'semantic-ui-react';
 import { text } from "../text/text.js";
 import imagesCache from './ImageHelper.js'
 import shortid from 'shortid';
+import ImageFadeIn from 'react-image-fade-in'
 import { modal_data } from './Modal.js';
 import "react-sweet-progress/lib/style.css";
-import "./Home.css";
+import decor from '../images/BlueDecoration.png';
+import NPM from '../components/npmQuestion.js';
 import Coffee from "../components/coffee.js";
+import Strengths from "../components/strengthsQuestion.js";
+import TechStack from "../components/techStack.js";
+import "./Home.css";
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
-
+    
     this.state = {
       isLoading: true,
       notes: [],
@@ -31,25 +36,31 @@ export default class Home extends Component {
       masterData: [],
     };
   }
-
-
+  
+  
   async componentDidMount() {
     if (!this.props.isAuthenticated) {
       return;
     }
-
+    
     try {
       const notes = await this.notes();
       this.setState({ notes });
     } catch (e) {
       alert(e);
     }
-
+    
     this.setState({ isLoading: false });
   }
-
+  
   notes() {
     return API.get("notes", "/notes");
+  }
+  
+  handleImageChange = () => {
+    this.setState({
+      imageClass: 'image-loaded'
+    })
   }
   
   nameRandomizer = () => {
@@ -58,22 +69,22 @@ export default class Home extends Component {
   }
   nextSlide = () => {
     const {text, textCounter, modalVisible, eventCounter} = this.state;
-
-      let progress = (((textCounter+2) / text.length) * 100).toFixed(2);
-      console.log(`Progress: ${progress}, textCounter: ${textCounter}`);
+    let progress = (((textCounter+2) / text.length) * 100).toFixed(2);
+    console.log(`Progress: ${progress}, textCounter: ${textCounter}`);
       this.setState({
         textCounter: textCounter + 1,
-        progress
+        imageClass: 'image',
+        progress,
       })
 
       
       if (textCounter > 2) {
-        setTimeout(() => {
+       
           this.setState({
             modalVisible: !modalVisible,
             eventCounter: eventCounter + 1
           }) 
-        }, 3000)
+
         
       }
     
@@ -128,11 +139,17 @@ export default class Home extends Component {
         )
         buttonCheck = true;
       }
+      if (line.includes('SCHEDULE_BUTTON')) {
+        lineRender.push(
+          <p><a href={'https://calendly.com/jonathan-p-schwartz/gartner/'} target={"_blank"}><Button inverted color='blue' onClick={this.nextSlide}>Schedule Coffee Now</Button></a></p>
+        )
+        buttonCheck = true;
+      }
       Object.keys(imagesCache).forEach(key => {
         if (line.includes(key)){
           imageCheck = true;
           lineRender.push(
-            <img className="imageInsert" key={shortid.generate()} src={`${imagesCache[key]}`} alt={key}/>
+            <ImageFadeIn loadAsBackgroundImage={false} opacityTransition={1} height={"75%"} width={"75%"} className={`imageInsert`} src={`${imagesCache[key]}`} />
           )
         }
       })
@@ -145,9 +162,8 @@ export default class Home extends Component {
 
     return (
       <div key={shortid.generate()}>
-    
-
         <Progress percent={progress}/>
+        <img src={decor} alt="bottom_decor"/>
           <Modal
             key="modal" 
             className="modal_trail"
@@ -166,6 +182,10 @@ export default class Home extends Component {
         </Modal>
 
         {textCounter === 5 && <Coffee userName={playerName} />}
+        {textCounter === 6 && <NPM userName={playerName} />}
+        {textCounter === 7 && <TechStack userName={playerName} title={"Current Stack"} placeholder={"Current Stack: Languages, Frameworks, Databases"}/>}
+        {textCounter === 8 && <TechStack userName={playerName} title={"Wishlist Stack"} placeholder={"WishList: Languages, Frameworks, Databases"}/>}
+        {textCounter === 9 && <Strengths userName={playerName} title={"Wishlist Stack"} placeholder={"WishList: Languages, Frameworks, Databases"}/>}
 
         <div className="textBlock" key={shortid.generate()}>
             {lineRender}
@@ -183,27 +203,7 @@ export default class Home extends Component {
             }
           }   
         />
-        <KeyboardEventHandler
-          handleKeys={['y', 'n']}
-          onKeyEvent={(key, e) => {
-              switch (textCounter) {
-                case 4:
-                  this.coffee(key);
-                  break;
-                default:
-                  break;
-              }
-            }
-          }
-          />  
-        <KeyboardEventHandler
-          handleKeys={['space']}
-          onKeyEvent={(key, e) => {
-              this.nextSlide();
-            }
-          }   
-        />
-      
+        
       </div>
     )
 
@@ -218,6 +218,8 @@ export default class Home extends Component {
           <Link to="/signup"><Button inverted color='green'>New Journey</Button></Link>
           <Link to="/login"><Button inverted color='green'>Login</Button></Link>
         <p> Made with <span role="img" aria-label="heart">❤️</span> with React and serverless AWS</p>
+        <img src={decor} alt="bottom_decor"/>
+
         <img className="imageInsert" key={shortid.generate()} src={`${imagesCache.main_office}`} alt={'main_office'}/>
         </div>
         <br/>
