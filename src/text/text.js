@@ -18,7 +18,9 @@ export const text = [
     '4. Bruce, Frontend Engineer',
     '5. Sabbir, Backend Engineer',
     '6. Choose your own name',
-    'Please enter the number of your choice: _'],
+    'Please enter the number of your choice: _',
+    `{main_office}`
+  ],
   // 3
   [`Hey, NAMEPLACEHOLDER!`,
    `Jonathan's almost ready for his first day. Shall we get started?`,
@@ -59,10 +61,9 @@ export const text = [
   `CONTINUE_BUTTON`,
   `{trophy_shot}`],
    // 11
-   [`Outside of programming, NAMEPLACEHOLDER, how would you fill a perfect weekend?`,
-   `What are some of your favorite hobbies?`,
-   `Jonathan is obsessed with board games (he owns over 150),`,
-   `loves seeking out vegan eateries, binge-watching Japanese television and Ping Pong`,
+   [`Outside of programming, Jonathan is obsessed with board games (he owns over 150),`,
+   `thrift shop hunting, binge-watching Japanese television and Ping Pong`,
+   `NAMEPLACEHOLDER, how would you fill a perfect weekend?`,
    `CONTINUE_BUTTON`,
    `{Ping_Pong}`],
    // 12
@@ -71,3 +72,4 @@ export const text = [
     `{Programming_Skill}`
     ],
 ];
+

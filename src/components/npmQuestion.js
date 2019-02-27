@@ -2053,8 +2053,7 @@ class NPM extends Component {
       render() {
         return (
         <div>
-            <SemanticToastContainer />
-            <Button onClick={this.handleSubmit} type="submit">Submit</Button>
+            <SemanticToastContainer position="bottom-right"/>
             <Dropdown 
                 style={{margin: "10px"}}
                 placeholder='NPM Essentials' 
@@ -2065,6 +2064,7 @@ class NPM extends Component {
                 onChange={(e, { value }) => this.setState({ value })}
                 options={options}
                 />
+            <Button inverted color='grey' onClick={this.handleSubmit} type="submit">Submit</Button>
         </div>
         )
         }

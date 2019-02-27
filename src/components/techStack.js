@@ -6,7 +6,6 @@ import { SemanticToastContainer, toast } from 'react-semantic-toasts';
 import 'react-semantic-toasts/styles/react-semantic-alert.css';
 
 const options = [
-{key:'ES6',text:'ES6',value:'ES6'},
 {key:'React',text:'React',value:'React'},
 {key:'Redux',text:'Redux',value:'Redux'},
 {key:'SASS',text:'SASS',value:'SASS'},
@@ -48,10 +47,8 @@ const options = [
 {key:'Perl',text:'Perl',value:'Perl'},
 {key:'Node.js',text:'Node.js',value:'Node.js'},
 {key:'Angular',text:'Angular',value:'Angular'},
-{key:'React',text:'React',value:'React'},
 {key:'.NET',text:'.NET',value:'.NET'},
 {key:'Spring',text:'Spring',value:'Spring'},
-{key:'Django',text:'Django',value:'Django'},
 {key:'Cordova',text:'Cordova',value:'Cordova'},
 {key:'TensorFlow',text:'TensorFlow',value:'TensorFlow'},
 {key:'Xamarin',text:'Xamarin',value:'Xamarin'},
@@ -92,7 +89,7 @@ class CurrentStack extends Component {
         event.preventDefault();
         const { value } = this.state;
         const { userName, title } = this.props;
-        let content = `${title}: ${userName} currently uses the following stack: ${value}`;
+        let content = `${userName}'s ${title} stack: ${value}`;
         console.log(content);
         try {
           await this.createNote({
@@ -126,8 +123,7 @@ class CurrentStack extends Component {
       render() {
         return (
         <div>
-            <SemanticToastContainer />
-            <Button onClick={this.handleSubmit} type="submit">Submit</Button>
+            <SemanticToastContainer position="bottom-right"/>
             <Dropdown 
                 style={{margin: "10px"}}
                 placeholder={this.props.placeholder}
@@ -138,6 +134,7 @@ class CurrentStack extends Component {
                 onChange={(e, { value }) => this.setState({ value })}
                 options={options}
                 />
+            <Button inverted color='grey' onClick={this.handleSubmit} type="submit">Submit</Button>
         </div>
         )
         }

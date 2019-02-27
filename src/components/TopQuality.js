@@ -12,8 +12,8 @@ export default class Qualities extends Component {
   handleSubmit = async event => {
     event.preventDefault();
     const { value } = this.state;
-    const { userName, title } = this.props;
-    let content = `${title}: ${userName} currently uses the following stack: ${value}`;
+    const { userName } = this.props;
+    let content = `${userName} ranks this as a top quality: ${value}`;
     console.log(content);
     try {
       await this.createNote({
@@ -107,8 +107,8 @@ export default class Qualities extends Component {
             onChange={this.handleChange}
           />
         </Form.Field>
-        <Button onClick={this.handleSubmit} type="submit">Submit</Button>
-        <SemanticToastContainer />
+        <Button inverted color='grey' onClick={this.handleSubmit} type="submit">Submit</Button>
+        <SemanticToastContainer position="bottom-right"/>
       </Form> 
       
     )

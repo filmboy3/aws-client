@@ -24,7 +24,7 @@ export default class Coffee extends Component {
         event.preventDefault();
         const { restaurant, order } = this.state;
         const { userName } = this.props;
-        let content = `${userName} wants ${order} from ${restaurant}`;
+        let content = `${userName} would like to order '${order}' from '${restaurant}'`;
         console.log(content);
         try {
           await this.createNote({
@@ -53,7 +53,7 @@ export default class Coffee extends Component {
    render() {
        return (
            <div>
-        <SemanticToastContainer />
+        <SemanticToastContainer position="bottom-right"/>
         <Form onSubmit={this.handleSubmit}>
           <Form.Field>
             <label style={{color: 'grey'}}>Favorite Coffee Spot</label>
@@ -75,7 +75,7 @@ export default class Coffee extends Component {
                 componentClass="textarea"
              />
           </Form.Field>
-            <Button type="submit">Submit</Button>
+            <Button inverted color='grey' type="submit">Submit</Button>
         </Form>
         </div>
        )

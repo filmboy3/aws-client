@@ -22,7 +22,11 @@
   }
 
   button {
-    margin-bottom: 10px !important;
+    margin-top: 10px !important;
+  }
+
+  image {
+    border-image-slice: 33% 33% 33% 33%; border-image-width: 1.5em 1.5em 1.5em 1.5em; border-image-outset: 0px 0px 0px 0px; border-image-repeat: round round; border-image-source: url("https://mdn.mozillademos.org/files/6009/border-image-2.png");
   }
 
   .progress-bar {
@@ -46,8 +50,6 @@
     text-align: center;
   }
 
-.image { opacity: 0; transition: opacity 3s; }
-.image-loaded { opacity: 1; }
 
   @media all and (min-width: 480px) {
   
@@ -72,6 +74,19 @@
   }
 
   .imageInsert {
+    border:10px outset #c7b9b6;
+    border-width:10px;
+    border-style:inset;
+    border-color:#c7b9b6;
+    max-width: 85%;
+    max-height: 85%;
+  }
+
+  .splash {
+    margin-bottom: 20px !important;
+  }
+
+  .modalInsert {
     max-width: 85%;
     max-height: 85%;
   }
@@ -81,9 +96,6 @@
     transform: scaleY(-1);
   }
 
-  /* .textBlock {
-    text-align: center;
-  } */
   
   .Home .lander p {
     color: #999;

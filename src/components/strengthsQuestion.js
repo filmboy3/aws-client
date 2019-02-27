@@ -25,7 +25,6 @@ export default class Coffee extends Component {
         const { strength, weakness } = this.state;
         const { userName } = this.props;
         let content = `${userName} believes their greatest weakness is '${weakness}' and their greatest strength is '${strength}'`;
-        console.log(content);
         try {
           await this.createNote({
             content
@@ -51,12 +50,13 @@ export default class Coffee extends Component {
         });
       }
    render() {
+     const { userName } = this.props;
        return (
            <div>
-        <SemanticToastContainer />
+        <SemanticToastContainer position="bottom-right"/>
         <Form onSubmit={this.handleSubmit}>
           <Form.Field>
-            <label style={{color: 'grey'}}>Strong Suit</label>
+            <label style={{color: 'grey'}}>{userName}'s strengths</label>
             <input
                 id="strength"
                 placeholder='Technical Communication'
@@ -66,16 +66,16 @@ export default class Coffee extends Component {
              />
           </Form.Field>
           <Form.Field>
-            <label style={{color: 'grey'}}>Area for improvement</label>
+            <label style={{color: 'grey'}}>{userName}'s areas for improvement</label>
             <input
-                placeholder='Not Using Testing'
+                placeholder='Not incorporating testing'
                 id="weakness"
                 onChange={this.handleChange}
                 value={this.state.weakness}
                 componentClass="textarea"
              />
           </Form.Field>
-            <Button type="submit">Submit</Button>
+            <Button inverted color='grey' type="submit">Submit</Button>
         </Form>
         </div>
        )

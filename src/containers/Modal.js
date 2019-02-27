@@ -4,8 +4,8 @@ import milk from '../images/Milk.png';
 import subway from '../images/commute2.gif'
 
 export const modal_data = [
-    [tombstone, "NAMEPLACEHOLDER's Wi-Fi at home just died. NAMEPLACEHOLDER is in mourning until Time-Warner arrives."], 
-    [tombstone, "NAMEPLACEHOLDER's Wi-Fi at home just died. NAMEPLACEHOLDER will be in mourning until Time-Warner arrives."], 
+    [tombstone, "NAMEPLACEHOLDER's Wi-Fi at home has died. NAMEPLACEHOLDER is in mourning until Time-Warner arrives."], 
+    [tombstone, "NAMEPLACEHOLDER's Wi-Fi at home has died. NAMEPLACEHOLDER will be in mourning until Time-Warner arrives."], 
     [medication, "NAMEPLACEHOLDER got food poisoning from a street-cart Poké bowl. NAMEPLACEHOLDER had to go home.", "medication"],
     [milk, "Someone finished the almond milk in the L2 kitchen. Rumors are flying it was NAMEPLACEHOLDER again. Morale is low.", "milk"],
     [subway, "The L train is stopped and was supposed to have been 'on the move momentarily' 45 minutes ago. NAMEPLACEHOLDER is definitely going to be late."],

@@ -14,7 +14,8 @@ import "react-sweet-progress/lib/style.css";
 import decor from '../images/BlueDecoration.png';
 import NPM from '../components/npmQuestion.js';
 import Coffee from "../components/coffee.js";
-import SingleQuestion from "../components/singleQuestion.js";
+import Hobbies from "../components/hobbiesQuestion.js";
+import Expectations from "../components/expectationsQuestion.js";
 import Strengths from "../components/strengthsQuestion.js";
 import TechStack from "../components/techStack.js";
 import TopQuality from "../components/TopQuality.js";
@@ -89,7 +90,7 @@ export default class Home extends Component {
 
         
       }
-    
+      window.scrollTo(0, 0)
   }
 
 
@@ -132,17 +133,19 @@ export default class Home extends Component {
     let parsedEvent = this.parser(this.nameRandomizer(), modal_data[eventCounter][1])
 
     let lineRender = [];
+    let buttonRender = [];
+    let imageRender = [];
     text[textCounter].forEach((line) => {
       let imageCheck = false;
       let buttonCheck = false;
       if (line.includes('CONTINUE_BUTTON')) {
-        lineRender.push(
+        buttonRender.push(
           <p><Button inverted color='green' onClick={this.nextSlide}>Onward</Button></p>
         )
         buttonCheck = true;
       }
       if (line.includes('SCHEDULE_BUTTON')) {
-        lineRender.push(
+        buttonRender.push(
           <p><a href={'https://calendly.com/jonathan-p-schwartz/gartner/'} target={"_blank"}><Button inverted color='blue' onClick={this.nextSlide}>Schedule Coffee Now</Button></a></p>
         )
         buttonCheck = true;
@@ -150,7 +153,7 @@ export default class Home extends Component {
       Object.keys(imagesCache).forEach(key => {
         if (line.includes(key)){
           imageCheck = true;
-          lineRender.push(
+          imageRender.push(
             <ImageFadeIn loadAsBackgroundImage={false} opacityTransition={1} height={"75%"} width={"75%"} className={`imageInsert`} src={`${imagesCache[key]}`} />
           )
         }
@@ -171,29 +174,33 @@ export default class Home extends Component {
             className="modal_trail"
             show={modalVisible}
             onHide={modalClose}
+            height={'500px'}
+            width={'500px'}
           >
             <Modal.Header closeButton>
                 <Modal.Title className="News">The Gartner Times</Modal.Title>
               </Modal.Header>
               <Modal.Body>
               <div>
-                <img className="imageInsert" key={shortid.generate()} src={`${modal_data[eventCounter][0]}`} alt={`${modal_data[eventCounter][2]}`}/>
                 <p>{parsedEvent}</p>
+              <ImageFadeIn loadAsBackgroundImage={false} opacityTransition={1} className={`modalInsert`} src={`${modal_data[eventCounter][0]}`} />
               </div>
             </Modal.Body>
         </Modal>
 
-        {textCounter === 5 && <Coffee userName={playerName} />}
-        {textCounter === 6 && <NPM userName={playerName} />}
-        {textCounter === 7 && <TechStack userName={playerName} title={"Current Stack"} placeholder={"Current Stack: Languages, Frameworks, Databases"}/>}
-        {textCounter === 8 && <TechStack userName={playerName} title={"Wishlist Stack"} placeholder={"WishList: Languages, Frameworks, Databases"}/>}
-        {textCounter === 9 && <Strengths userName={playerName} title={"Strengths/Weaknesses"}/>}
-        {textCounter === 10 && <SingleQuestion userName={playerName} title={"Expectations of Jonathan"} placeholder={"...Besides slaying at company Karaoke nights"}/>}
-        {textCounter === 11 && <SingleQuestion userName={playerName} title={"Hobbies"} placeholder={"Underwater Basket Weaving"}/>}
-        {textCounter === 12 && <TopQuality userName={playerName} title={"Hobbies"} placeholder={"Underwater Basket Weaving"}/>}
 
         <div className="textBlock" key={shortid.generate()}>
             {lineRender}
+            {imageRender}
+        {textCounter === 5 && <Coffee userName={playerName} />}
+        {textCounter === 6 && <NPM userName={playerName} />}
+        {textCounter === 7 && <TechStack userName={playerName} title={"current"} placeholder={"Current Stack: Languages, Frameworks, Databases"}/>}
+        {textCounter === 8 && <TechStack userName={playerName} title={"wishlist"} placeholder={"WishList: Languages, Frameworks, Databases"}/>}
+        {textCounter === 9 && <Strengths userName={playerName} title={"Strengths/Weaknesses"}/>}
+        {textCounter === 10 && <Expectations userName={playerName} id={"Expectations"} title={"Expectations of Jonathan"} placeholder={"...Besides slaying at company Karaoke nights"}/>}
+        {textCounter === 11 && <Hobbies userName={playerName}/>}
+        {textCounter === 12 && <TopQuality userName={playerName} id={"TopQualities"} title={"TopQualities"} placeholder={"Underwater Basket Weaving"}/>}
+            {buttonRender}
         </div>
         <KeyboardEventHandler
           handleKeys={['numeric']}
@@ -218,14 +225,15 @@ export default class Home extends Component {
     return (
       <div className="lander" key={shortid.generate()}>
         <div>
-
-        <p key={shortid.generate()}>Welcome to Jonathan's <span id="western">Onboarding Trail</span>, an interactive survey</p>
-          <Link to="/signup"><Button inverted color='green'>New Journey</Button></Link>
-          <Link to="/login"><Button inverted color='green'>Login</Button></Link>
+        <br/>
+        <p key={shortid.generate()}>Welcome to Jonathan's <span id="western">Onboarding Trail</span>, an Interactive Survey</p>
+        <img className="imageInsert" key={shortid.generate()} src={`${imagesCache.main_office}`} alt={'main_office'}/>
+          <Link to="/signup"><Button className="splash" inverted color='green'>New Journey</Button></Link>
+          <Link to="/login"><Button className="splash" inverted color='green'>Login</Button></Link>
+          <br/>
         <p> Made with <span role="img" aria-label="heart">❤️</span> with React and serverless AWS</p>
         <img src={decor} alt="bottom_decor"/>
 
-        <img className="imageInsert" key={shortid.generate()} src={`${imagesCache.main_office}`} alt={'main_office'}/>
         </div>
         <br/>
       </div>

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
 import LoaderButton from '../components/LoaderButton';
+import decor from '../images/BlueDecoration.png';
 import { Auth } from "aws-amplify";
 
 export default class Login extends Component {
@@ -72,6 +73,7 @@ export default class Login extends Component {
             Login
           </LoaderButton>
         </form>
+        <img src={decor} alt="bottom_decor"/>
       </div>
     );
   }
