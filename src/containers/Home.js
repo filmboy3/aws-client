@@ -19,6 +19,7 @@ import Expectations from "../components/expectationsQuestion.js";
 import Strengths from "../components/strengthsQuestion.js";
 import TechStack from "../components/techStack.js";
 import TopQuality from "../components/TopQuality.js";
+import computer_load from '../images/computerLoad.gif';
 import "./Home.css";
 
 export default class Home extends Component {
@@ -29,6 +30,7 @@ export default class Home extends Component {
       isLoading: true,
       notes: [],
       modalVisible: false,
+      loading: '',
       textCounter: 0,
       players: ['Raj', 'Kliment', 'Runtao', 'Bruce', 'Sabbir'],
       otherPlayers: [],
@@ -38,10 +40,12 @@ export default class Home extends Component {
       progress: 0,
       masterData: [],
     };
+    this.inputNewItem = React.createRef()
   }
   
   
   async componentDidMount() {
+
     if (!this.props.isAuthenticated) {
       return;
     }
@@ -70,7 +74,16 @@ export default class Home extends Component {
     const { otherPlayers } = this.state;
     return otherPlayers[Math.floor(Math.random()*otherPlayers.length)];
   }
-  nextSlide = () => {
+  nextSlide = (event) => {
+    try {
+      event.preventDefault();
+    } catch(e){
+      console.log(e)
+    }
+    this.setState({
+      loading: 'loading'
+    })
+    
     const {text, textCounter, modalVisible, eventCounter} = this.state;
     let progress = (((textCounter+2) / text.length) * 100).toFixed(2);
     console.log(`Progress: ${progress}, textCounter: ${textCounter}`);
@@ -82,15 +95,24 @@ export default class Home extends Component {
 
       
       if (textCounter > 2) {
-       
           this.setState({
             modalVisible: !modalVisible,
-            eventCounter: eventCounter + 1
+            eventCounter: eventCounter + 1,
           }) 
-
-        
       }
-      window.scrollTo(0, 0)
+
+      const element = document.getElementById('prog');
+        if (element) element.scrollIntoView();
+        this.setState({
+          loading: ''
+        })
+      setTimeout(() => {
+        const element = document.getElementById('prog');
+        if (element) element.scrollIntoView();
+        this.setState({
+          loading: ''
+        })
+      }, 0);
   }
 
 
@@ -126,6 +148,7 @@ export default class Home extends Component {
     return string.replace(/NAMEPLACEHOLDER/g, `${name}`)
   }
 
+
   renderNotesList(notes, props) {
 
     let { modalVisible, progress, playerName, textCounter, text, eventCounter } = this.state;
@@ -140,13 +163,19 @@ export default class Home extends Component {
       let buttonCheck = false;
       if (line.includes('CONTINUE_BUTTON')) {
         buttonRender.push(
-          <p><Button inverted color='green' onClick={this.nextSlide}>Onward</Button></p>
+          <p><Button inverted color='green' className={this.state.loading} onClick={this.nextSlide}>Onward</Button></p>
         )
         buttonCheck = true;
       }
       if (line.includes('SCHEDULE_BUTTON')) {
         buttonRender.push(
-          <p><a href={'https://calendly.com/jonathan-p-schwartz/gartner/'} target={"_blank"}><Button inverted color='blue' onClick={this.nextSlide}>Schedule Coffee Now</Button></a></p>
+         <p><a href={'https://calendly.com/jonathan-p-schwartz/gartner/'} target={"_blank"}><Button inverted class={this.state.loading} color='blue'>Schedule Coffee Now</Button></a></p>
+        )
+        buttonCheck = true;
+      }
+      if (line.includes('ALERT_BUTTON')) {
+        buttonRender.push(
+         <p><a href={'https://suspicious-feynman-a17723.netlify.com/'} target={"_blank"}><Button inverted class={this.state.loading} color='red'>Debug</Button></a></p>
         )
         buttonCheck = true;
       }
@@ -154,7 +183,7 @@ export default class Home extends Component {
         if (line.includes(key)){
           imageCheck = true;
           imageRender.push(
-            <ImageFadeIn loadAsBackgroundImage={false} opacityTransition={1} height={"75%"} width={"75%"} className={`imageInsert`} src={`${imagesCache[key]}`} />
+            <img className={`imageInsert crt`} src={`${imagesCache[key]}`} alt={`${imagesCache[key]}`} />
           )
         }
       })
@@ -166,10 +195,10 @@ export default class Home extends Component {
       })
 
     return (
-      <div key={shortid.generate()}>
-        <Progress percent={progress}/>
-        <img src={decor} alt="bottom_decor"/>
-          <Modal
+      <div ref={this.inputNewItem}  key={shortid.generate()}>
+        <Progress id="prog" percent={progress}/>
+        <img class="smallerImg" src={decor} alt="bottom_decor"/>
+        {textCounter !== 6 && <Modal
             key="modal" 
             className="modal_trail"
             show={modalVisible}
@@ -177,7 +206,7 @@ export default class Home extends Component {
             height={'500px'}
             width={'500px'}
           >
-            <Modal.Header closeButton>
+           <Modal.Header closeButton>
                 <Modal.Title className="News">The Gartner Times</Modal.Title>
               </Modal.Header>
               <Modal.Body>
@@ -186,20 +215,21 @@ export default class Home extends Component {
               <ImageFadeIn loadAsBackgroundImage={false} opacityTransition={1} className={`modalInsert`} src={`${modal_data[eventCounter][0]}`} />
               </div>
             </Modal.Body>
-        </Modal>
+        </Modal>}
 
 
         <div className="textBlock" key={shortid.generate()}>
             {lineRender}
-            {imageRender}
         {textCounter === 5 && <Coffee userName={playerName} />}
         {textCounter === 6 && <NPM userName={playerName} />}
-        {textCounter === 7 && <TechStack userName={playerName} title={"current"} placeholder={"Current Stack: Languages, Frameworks, Databases"}/>}
-        {textCounter === 8 && <TechStack userName={playerName} title={"wishlist"} placeholder={"WishList: Languages, Frameworks, Databases"}/>}
+        {textCounter === 7 && <TechStack userName={playerName} title={"current"} placeholder={"Current Stack"}/>}
+        {textCounter === 8 && <TechStack userName={playerName} title={"wishlist"} placeholder={"WishList Stack"}/>}
         {textCounter === 9 && <Strengths userName={playerName} title={"Strengths/Weaknesses"}/>}
-        {textCounter === 10 && <Expectations userName={playerName} id={"Expectations"} title={"Expectations of Jonathan"} placeholder={"...Besides slaying at company Karaoke nights"}/>}
+        {textCounter === 10 && <Expectations userName={playerName} id={"Expectations"} title={"Expectations of Jonathan"} placeholder={"Ideation"}/>}
         {textCounter === 11 && <Hobbies userName={playerName}/>}
         {textCounter === 12 && <TopQuality userName={playerName} id={"TopQualities"} title={"TopQualities"} placeholder={"Underwater Basket Weaving"}/>}
+            {textCounter !== 6 && imageRender}
+            {textCounter === 6 && <ImageFadeIn loadAsBackgroundImage={false} opacityTransition={1} className={`modalInsert`} src={computer_load} />}
             {buttonRender}
         </div>
         <KeyboardEventHandler
@@ -227,7 +257,7 @@ export default class Home extends Component {
         <div>
         <br/>
         <p key={shortid.generate()}>Welcome to Jonathan's <span id="western">Onboarding Trail</span>, an Interactive Survey</p>
-        <img className="imageInsert" key={shortid.generate()} src={`${imagesCache.main_office}`} alt={'main_office'}/>
+        <img className="imageInsert crt" key={shortid.generate()} src={`${imagesCache.main_office}`} alt={'main_office'}/>
           <Link to="/signup"><Button className="splash" inverted color='green'>New Journey</Button></Link>
           <Link to="/login"><Button className="splash" inverted color='green'>Login</Button></Link>
           <br/>

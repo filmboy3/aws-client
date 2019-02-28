@@ -1,0 +1,148 @@
+@mixin animation($animate...) {
+    $max: length($animate);
+    $animations: '';
+
+    @for $i from 1 through $max {
+        $animations: #{$animations + nth($animate, $i)};
+
+        @if $i < $max {
+            $animations: #{$animations + ", "};
+        }
+    }
+    -webkit-animation: $animations;
+    -moz-animation:    $animations;
+    -o-animation:      $animations;
+    animation:         $animations;
+}
+
+@mixin keyframes($animationName) {
+    @-webkit-keyframes #{$animationName} {
+        @content;
+    }
+    @-moz-keyframes #{$animationName} {
+        @content;
+    }
+    @-o-keyframes #{$animationName} {
+        @content;
+    }
+    @keyframes #{$animationName} {
+        @content;
+    }
+}
+
+@mixin transform($value){
+  -webkit-transform: $value;
+  -moz-transform: $value;
+  -ms-transform: $value;
+  -o-transform: $value;
+  transform: $value;
+}
+
+@mixin opacity($value) {
+  $IEValue: $value*100;
+  opacity: $value;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity="+$IEValue+")";
+  filter: alpha(opacity=$IEValue);
+}
+
+$offset: 6px;
+$bgcolor: #111;
+
+*{
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+body{
+  background: $bgcolor;
+}
+// #root{
+//   position: absolute;
+//   top: 30%;
+//   @include transform(translateY(-50%) translateX(-50%));
+//   left: 50%;
+// }
+#text{
+  top: 0;
+  left: -$offset;
+  color: red;
+  mix-blend-mode: screen;
+  position: relative;
+  white-space: nowrap;
+  -webkit-filter: blur(1px);
+  -moz-filter: blur(1px);
+   filter: blur(1px);
+  @include animation('skew 1s infinite', 'flash 9s infinite');
+  
+  &:after, &:before{
+    content: attr(data-text);
+    position: absolute;
+    mix-blend-mode: screen;
+  }
+  &:after{
+    top: 0;
+    left: $offset;
+    color: blue;
+    @include animation('move 1.5s infinite');
+  }
+  &:before{
+    top: -0.4*$offset;
+    left: 0.6*$offset;
+    color: limegreen;
+  }
+}
+
+.line{
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 1px;
+  background: blue;
+  mix-blend-mode: screen;
+  -webkit-filter: blur(1px);
+  -moz-filter: blur(1px);
+  filter: blur(1px);
+  &:after, &:before{
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    mix-blend-mode: screen;
+  }
+  &:after{
+    top: 2px;
+    background: red;
+  }
+  &:before{
+    top: -2px;
+    background: limegreen;
+  }
+}
+  
+
+
+@include keyframes(skew){
+  0%    { @include transform(none) }
+  30%   { @include transform(none) }
+  30.2% { @include transform(skewX(50deg)) }
+  30.4% { @include transform(skewX(-50deg)) }
+  31%   { @include transform(none) }
+}
+@include keyframes(move){
+  0%   { @include transform(none); }
+  30%  { @include transform(none); }
+  31%  { @include transform(translateX(-$offset)) }
+  33%  { @include transform(none); }
+  98%  { @include transform(none); }
+  100% { @include transform(translateX($offset)) }
+}
+@include keyframes(flash){
+  0%   { @include opacity(.3) }
+  50%  { @include opacity(0) }
+}
+@include keyframes(lines){
+  0%   { @include opacity(0) }
+  50%  { @include opacity(.3) }
+}

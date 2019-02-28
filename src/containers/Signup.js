@@ -8,6 +8,8 @@ import {
 import LoaderButton from "../components/LoaderButton";
 import "./Signup.css";
 import { Auth } from "aws-amplify";
+import decor from '../images/BlueDecoration.png';
+
 
 export default class Signup extends Component {
   constructor(props) {
@@ -82,7 +84,7 @@ export default class Signup extends Component {
     return (
       <form onSubmit={this.handleConfirmationSubmit}>
         <FormGroup controlId="confirmationCode" bsSize="large">
-          <ControlLabel>Confirmation Code</ControlLabel>
+          <ControlLabel className="label">Confirmation Code</ControlLabel>
           <FormControl
             autoFocus
             type="tel"
@@ -108,7 +110,7 @@ export default class Signup extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <FormGroup controlId="email" bsSize="large">
-          <ControlLabel>Email</ControlLabel>
+          <ControlLabel className="label">Email</ControlLabel>
           <FormControl
             autoFocus
             type="email"
@@ -117,7 +119,7 @@ export default class Signup extends Component {
           />
         </FormGroup>
         <FormGroup controlId="password" bsSize="large">
-          <ControlLabel>Password</ControlLabel>
+          <ControlLabel className="label">Password</ControlLabel>
           <FormControl
             value={this.state.password}
             onChange={this.handleChange}
@@ -125,7 +127,7 @@ export default class Signup extends Component {
           />
         </FormGroup>
         <FormGroup controlId="confirmPassword" bsSize="large">
-          <ControlLabel>Confirm Password</ControlLabel>
+          <ControlLabel className="label">Confirm Password</ControlLabel>
           <FormControl
             value={this.state.confirmPassword}
             onChange={this.handleChange}
@@ -151,6 +153,7 @@ export default class Signup extends Component {
         {this.state.newUser === null
           ? this.renderForm()
           : this.renderConfirmationForm()}
+          <img src={decor} alt="bottom_decor"/>
       </div>
     );
   }

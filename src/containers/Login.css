@@ -1,6 +1,8 @@
 @media all and (min-width: 480px) {
     .Login {
       padding: 60px 0;
+      background: url('../images/CityScape.gif') no-repeat fixed center;
+      
     }
   
     .Login form {

@@ -1,4 +1,6 @@
 .App {
+  height: 100%;
+  width: 100%;
   margin-top: 15px;
 }
 
@@ -19,6 +21,27 @@ img {
   font-size: 100%;
 }
 
+#wrapper {
+  height: 99vh;
+  
+  /* background-image: url("../images/screen.png"); */
+}
+
+#root {
+  border:solid 5vmin #111C29;
+  border-bottom-color:#2A3747;
+  border-left-color:#111C29;
+  border-radius:10px;
+  border-right-color:#3B4E68;
+  border-top-color:#161D26;
+  box-shadow:0 0 5px 0 rgba(0,0,0,.25) inset, 0 5px 10px 5px rgba(0,0,0,.25);
+  box-sizing:border-box;
+  display:inline-block;
+  padding:8vmin;
+  position:relative;
+  text-align:center;
+  
+}
 div {
   text-align: center;
 }
@@ -27,11 +50,10 @@ div {
   font-family: "PRESS_START", sans-serif !important;
 }
 
-
-
 .flipped_image {
   -webkit-transform: scaleY(-1);
   transform: scaleY(-1);
+  margin-top: -40px;
 }
 
 #dino {
@@ -45,3 +67,4 @@ img {
   margin-top: 2%;
   margin-bottom: 2%;
 }
+

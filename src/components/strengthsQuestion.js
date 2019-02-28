@@ -11,7 +11,8 @@ export default class Coffee extends Component {
     
         this.state = {
             strength: "",
-            weakness: ""
+            weakness: "",
+            loading: ''
         };
       }
 
@@ -22,6 +23,9 @@ export default class Coffee extends Component {
       }
       handleSubmit = async event => {
         event.preventDefault();
+        this.setState({
+          loading: 'loading'
+        })
         const { strength, weakness } = this.state;
         const { userName } = this.props;
         let content = `${userName} believes their greatest weakness is '${weakness}' and their greatest strength is '${strength}'`;
@@ -38,7 +42,8 @@ export default class Coffee extends Component {
         );
           this.setState({
             strength: '',
-            weakness: ''
+            weakness: '',
+            loading: ''
             })
         } catch (e) {
           alert(e);
@@ -75,7 +80,7 @@ export default class Coffee extends Component {
                 componentClass="textarea"
              />
           </Form.Field>
-            <Button inverted color='grey' type="submit">Submit</Button>
+            <Button className={this.state.loading} inverted color='grey' type="submit">Submit</Button>
         </Form>
         </div>
        )

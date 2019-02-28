@@ -1,11 +1,13 @@
 @media all and (min-width: 480px) {
     .Signup {
-      padding: 60px 0;
+      background: url('../images/CityScape.gif') no-repeat fixed center;
+      
     }
   
     .Signup form {
       margin: 0 auto;
       max-width: 320px;
+      
     }
   }
   

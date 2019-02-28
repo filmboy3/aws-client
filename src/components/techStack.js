@@ -83,10 +83,14 @@ class CurrentStack extends Component {
     
         this.state = {
             value: [],
+            loading: ''
         };
       }
       handleSubmit = async event => {
         event.preventDefault();
+        this.setState({
+          loading: 'loading'
+        })
         const { value } = this.state;
         const { userName, title } = this.props;
         let content = `${userName}'s ${title} stack: ${value}`;
@@ -103,7 +107,8 @@ class CurrentStack extends Component {
             },
         );
           this.setState({
-            value: []
+            value: [],
+            loading: ''
             })
         } catch (e) {
           alert(e);
@@ -134,7 +139,7 @@ class CurrentStack extends Component {
                 onChange={(e, { value }) => this.setState({ value })}
                 options={options}
                 />
-            <Button inverted color='grey' onClick={this.handleSubmit} type="submit">Submit</Button>
+            <Button className={this.state.loading} inverted color='grey' onClick={this.handleSubmit} type="submit">Submit</Button>
         </div>
         )
         }

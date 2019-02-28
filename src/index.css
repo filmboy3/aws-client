@@ -22,6 +22,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root {
+  height:99vh;
+  overflow:auto;
+}
+/* 
+#wrapper {
+  height: 99vh;
+  background-image: url("../images/fullGreen.jpg");
+} */
+
 button, input {
   font-family: "PressStart" !important;
 }
@@ -58,3 +68,4 @@ input.form-control {
 input[type=file] {
   width: 100%;
 }
+

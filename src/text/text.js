@@ -8,7 +8,7 @@ export const text = [
   // 1
   ["To toggle music/SFX, press Ctrl-x",
   "CONTINUE_BUTTON",
-  `{walk_man}`], 
+  `{scott_headphone}`], 
   // 2
   [`There are many talented engineers in the L2 family.`,
     'You may support Jonathan as:', 
@@ -39,19 +39,18 @@ export const text = [
   // 6
   ["On a typical project, NAMEPLACEHOLDER, what are some go-to NPM packages you think Jonathan should know?",
   `CONTINUE_BUTTON`,
-    `{mother_board}`
+    `{computer_load}`
   ],
   // 7
   [`NAMEPLACEHOLDER, what are the essential components in L2's current tech stack?`,
   `CONTINUE_BUTTON`,
-  `{monitor_desk}`],
+  `{floppy_disk}`],
   // 8
   [`NAMEPLACEHOLDER, are there any wishlist frameworks/libraries the team is interested in trying out in 2019?`,
   `CONTINUE_BUTTON`,
   `{DeskHeadphone}`],
   // 9
-  [`Every Software Engineer has strengths and areas they'd like to improve.`,
-  `Jonathan recognizes that he's strong in his technical communication and liasing between departments, and needs to improve his coding speed.`,
+  [`Jonathan recognizes that he's strong in his technical communication and liasing between departments, and needs to improve his coding speed.`,
   `NAMEPLACEHOLDER, what are some of your strengths and areas you'd personally like to improve upon going forward?`,
   `CONTINUE_BUTTON`,
   `{gym_shot}`],
@@ -61,8 +60,7 @@ export const text = [
   `CONTINUE_BUTTON`,
   `{trophy_shot}`],
    // 11
-   [`Outside of programming, Jonathan is obsessed with board games (he owns over 150),`,
-   `thrift shop hunting, binge-watching Japanese television and Ping Pong`,
+   [`Outside of programming, Jonathan is obsessed with board games (he owns over 150) thrift shop hunting, binge-watching Japanese television and Ping Pong`,
    `NAMEPLACEHOLDER, how would you fill a perfect weekend?`,
    `CONTINUE_BUTTON`,
    `{Ping_Pong}`],
@@ -70,6 +68,14 @@ export const text = [
    [`While each are important, which of the following engineering abilities do you most highly value?`,
     `CONTINUE_BUTTON`,
     `{Programming_Skill}`
+    ],
+   // 13
+   [`Oh, no, NAMEPLACEHOLDER! The spreadsheet clone we've been working on broke last night, 
+   and none of the team can figure out why ...`,
+   `Can you debug it?`,
+    `ALERT_BUTTON`,
+    `CONTINUE_BUTTON`,
+    `{bed_scene}`
     ],
 ];
 

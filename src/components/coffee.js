@@ -11,7 +11,8 @@ export default class Coffee extends Component {
     
         this.state = {
             restaurant: "",
-            order: ""
+            order: "",
+            loading: ''
         };
       }
 
@@ -21,6 +22,9 @@ export default class Coffee extends Component {
         });
       }
       handleSubmit = async event => {
+        this.setState({
+          loading: 'loading'
+        })
         event.preventDefault();
         const { restaurant, order } = this.state;
         const { userName } = this.props;
@@ -39,7 +43,8 @@ export default class Coffee extends Component {
         );
           this.setState({
             restaurant: '',
-            order: ''
+            order: '',
+            loading: ''
             })
         } catch (e) {
           alert(e);
@@ -75,7 +80,7 @@ export default class Coffee extends Component {
                 componentClass="textarea"
              />
           </Form.Field>
-            <Button inverted color='grey' type="submit">Submit</Button>
+            <Button className ={this.state.loading} inverted color='grey' type="submit">Submit</Button>
         </Form>
         </div>
        )

@@ -10,7 +10,8 @@ export default class Expectations extends Component {
         super(props);
     
         this.state = {
-          expectations: ''
+          expectations: '',
+          loading: ''
         };
       }
 
@@ -21,6 +22,9 @@ export default class Expectations extends Component {
       }
       handleSubmit = async event => {
         event.preventDefault();
+        this.setState({
+          loading: 'loading'
+        })
        
         const { userName } = this.props;
         let content = `${userName} expects Jonathan to: '${this.state.expectations}'`;
@@ -36,7 +40,8 @@ export default class Expectations extends Component {
             },
         );
           this.setState({
-           
+            expectations: '',
+            loading: ''
             })
         } catch (e) {
           alert(e);
@@ -63,7 +68,7 @@ export default class Expectations extends Component {
                 componentClass="textarea"
              />
           </Form.Field>
-            <Button inverted color='gray' type="submit">Submit</Button>
+            <Button className={this.state.loading} inverted color='gray' type="submit">Submit</Button>
         </Form>
         </div>
        )

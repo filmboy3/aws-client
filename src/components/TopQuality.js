@@ -7,10 +7,15 @@ import { SemanticToastContainer, toast } from 'react-semantic-toasts';
 import 'react-semantic-toasts/styles/react-semantic-alert.css';
 
 export default class Qualities extends Component {
-  state = {}
+  state = {
+    loading: ''
+  }
   handleChange = (e, { value }) => this.setState({ value })
   handleSubmit = async event => {
     event.preventDefault();
+    this.setState({
+      loading: 'loading'
+    })
     const { value } = this.state;
     const { userName } = this.props;
     let content = `${userName} ranks this as a top quality: ${value}`;
@@ -27,7 +32,8 @@ export default class Qualities extends Component {
         },
     );
       this.setState({
-        value: []
+        value: [],
+        loading: ''
         })
     } catch (e) {
       alert(e);
@@ -40,6 +46,8 @@ export default class Qualities extends Component {
   }
   render() {
     return (
+      <div>
+      <SemanticToastContainer position="bottom-right"/>
       <Form>
         <Form.Field>
           Highest valued: <b>{this.state.value}</b>
@@ -107,10 +115,9 @@ export default class Qualities extends Component {
             onChange={this.handleChange}
           />
         </Form.Field>
-        <Button inverted color='grey' onClick={this.handleSubmit} type="submit">Submit</Button>
-        <SemanticToastContainer position="bottom-right"/>
+        <Button className={this.state.loading} inverted color='grey' onClick={this.handleSubmit} type="submit">Submit</Button>
       </Form> 
-      
+     </div> 
     )
   }
 }

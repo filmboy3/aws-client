@@ -10,7 +10,8 @@ export default class Hobbies extends Component {
         super(props);
     
         this.state = {
-          hobbies: ''
+          hobbies: '',
+          loading: ''
         };
       }
 
@@ -36,7 +37,8 @@ export default class Hobbies extends Component {
             },
         );
           this.setState({
-           
+            hobbies: '',
+            loading: ''
             })
         } catch (e) {
           alert(e);
@@ -63,7 +65,7 @@ export default class Hobbies extends Component {
                 componentClass="textarea"
              />
           </Form.Field>
-            <Button inverted color='green' type="submit">Submit</Button>
+            <Button inverted className={this.state.loading} color='green' type="submit">Submit</Button>
         </Form>
         </div>
        )

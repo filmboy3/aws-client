@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import { Auth } from "aws-amplify";
 import { LinkContainer } from "react-router-bootstrap";
@@ -9,6 +9,8 @@ import KeyboardEventHandler from 'react-keyboard-event-handler';
 import takeOnMe from './audio/takeOnMe.mp3'
 
 import "./App.css";
+// import "./App.scss";
+// import "./App2.scss";
 
 class App extends Component {
   constructor(props) {
@@ -54,7 +56,7 @@ class App extends Component {
     return (
       !this.state.isAuthenticating &&
       <div className="App container">
-        <Navbar collapseOnSelect style={{backgroundColor: 'black', borderColor: 'black'}}>
+        <Navbar collapseOnSelect style={{background: 'none', border: 'none'}}>
           <Navbar.Collapse>
             <Nav pullRight>
             {this.state.isAuthenticated
