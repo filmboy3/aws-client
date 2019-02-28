@@ -16,6 +16,7 @@ import computer_load from '../images/computerLoad.gif';
 import floppy_disk from '../images/floppy.gif';
 import Programming_Skill from '../images/programmingSkill.gif';
 import bed_scene from '../images/BedGif.gif';
+import computer_mirror from '../images/computerWithin.gif';
 
 export default {
     cityscape,
@@ -35,5 +36,6 @@ export default {
     floppy_disk,
     Programming_Skill,
     computer_load,
-    bed_scene
+    bed_scene,
+    computer_mirror
   }

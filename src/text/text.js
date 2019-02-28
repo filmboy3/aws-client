@@ -77,5 +77,19 @@ export const text = [
     `CONTINUE_BUTTON`,
     `{bed_scene}`
     ],
+    // 14
+   [`Wow, NAMEPLACEHOLDER -- those were some gnarly errors back there!`,
+   `You must be tuckered out from all that debugging. We'll leave the rest of the questions for some other time, shall we?`,
+   `Jonathan is so grateful that you took the time out of your busy schedule to help him feel welcome.`,
+    `CONTINUE_BUTTON`,
+    `{cityscape}`
+    ],
+    [`... uhh, oh hey, NAMEPLACEHOLDER. What are you still doing here?`,
+     `I thought the whole meta "Oregon Trail schtick" wore off several slides ago ...`,
+    `But who am I to talk? I'm just a web app.`,
+    `Now venture out into real world and go get coffee with Jonathan! Or do work, or something!`,
+  `SCHEDULE_BUTTON`,
+  `computer_mirror`
+]
 ];
 

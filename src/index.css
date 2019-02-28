@@ -26,11 +26,7 @@ body {
   height:99vh;
   overflow:auto;
 }
-/* 
-#wrapper {
-  height: 99vh;
-  background-image: url("../images/fullGreen.jpg");
-} */
+
 
 button, input {
   font-family: "PressStart" !important;

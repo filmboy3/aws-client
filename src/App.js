@@ -9,8 +9,6 @@ import KeyboardEventHandler from 'react-keyboard-event-handler';
 import takeOnMe from './audio/takeOnMe.mp3'
 
 import "./App.css";
-// import "./App.scss";
-// import "./App2.scss";
 
 class App extends Component {
   constructor(props) {

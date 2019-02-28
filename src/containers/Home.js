@@ -198,7 +198,7 @@ export default class Home extends Component {
       <div ref={this.inputNewItem}  key={shortid.generate()}>
         <Progress id="prog" percent={progress}/>
         <img class="smallerImg" src={decor} alt="bottom_decor"/>
-        {textCounter !== 6 && <Modal
+        {textCounter !== 6 && textCounter !== 14 && <Modal
             key="modal" 
             className="modal_trail"
             show={modalVisible}
