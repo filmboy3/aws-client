@@ -1,6 +1,7 @@
 {
   "name": "notes-app-client",
   "version": "0.1.0",
+  "homepage": "http://filmboy3.github.io/aws-client",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.0.0",
@@ -74,7 +75,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "aws s3 sync build/ s3://notes-schwartz --delete",
+    "awsdeploy": "aws s3 sync build/ s3://notes-schwartz --delete",
     "postdeploy": "aws cloudfront create-invalidation --distribution-id E18R2C4MOLIHHU--paths '/*'",
     "lint": "eslint --debug src/",
     "lint:write": "eslint --debug src/ --fix",
